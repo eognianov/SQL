@@ -1,0 +1,4 @@
+CREATE TABLE Towns(
+	Id INT PRIMARY KEY,
+	[Name] NVARCHAR(50)
+)
