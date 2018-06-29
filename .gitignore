@@ -6,3 +6,4 @@ bin
 obj
 .vs
 *.sln
+/DBAdvancedEntityFramework/IntoductionToDbApps/InitialSetup/Configuration.cs
