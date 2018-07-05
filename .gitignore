@@ -7,3 +7,6 @@ obj
 .vs
 *.sln
 /DBAdvancedEntityFramework/IntoductionToDbApps/InitialSetup/Configuration.cs
+*.user
+*.zip
+Configuraiton.cs
