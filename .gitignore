@@ -10,3 +10,4 @@ obj
 *.user
 *.zip
 Configuraiton.cs
+Configuration.cs
