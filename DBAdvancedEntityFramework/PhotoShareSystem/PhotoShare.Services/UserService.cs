@@ -69,7 +69,8 @@ namespace PhotoShare.Services
 
 	        this.context.Friendships.Add(friendship);
 	        this.context.SaveChanges();
-	        return friendship;
+
+            return friendship;
 	    }
 
 	    public void ChangePassword(int userId, string password)

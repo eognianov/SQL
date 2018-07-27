@@ -20,7 +20,7 @@ namespace PhotoShare.Client.Core.Commands
         // AcceptFriend <username1> <username2>
         public string Execute(string[] data)
         {
-           
+
             var firstUsername = data[0];
             var secondUsername = data[1];
 
@@ -36,21 +36,16 @@ namespace PhotoShare.Client.Core.Commands
             var user = this.userService.ByUsername<UserFriendsDto>(firstUsername);
             var friend = this.userService.ByUsername<UserFriendsDto>(secondUsername);
 
-            if (user.Friends.Any(x=>x.Username==secondUsername)) // user2 is friend to user1
+            if (user.Friends.Any(x => x.Username == secondUsername) && friend.Friends.Any(x => x.Username == firstUsername))
             {
                 throw new InvalidOperationException($"{firstUsername} is already a friend to {secondUsername}");
             }
-            else if (friend.Friends.Any(x => x.Username == firstUsername)) // user2 is friend to user1
-            {
-                throw new InvalidOperationException($"{secondUsername} is already a friend to {firstUsername}");
-            }
+
 
             this.userService.AcceptFriend(user.Id, friend.Id);
-            user.Friends.Add(new FriendDto()
-            {
-                Username = friend.Username
-            });
-            friend.Friends.Add(new FriendDto(){Username = user.Username});
+
+            user.Friends.Add(new FriendDto { Username = friend.Username });
+            friend.Friends.Add(new FriendDto { Username = user.Username });
 
             return $"Friend {friend.Username} added to {user.Username}";
         }

@@ -21,36 +21,47 @@ namespace PhotoShare.Client.Core.Commands
         {
             var username = data[0];
             var friendUsername = data[1];
-            var userExists = this.userService.Exists(username);
-            var friendExistrs = this.userService.Exists(friendUsername);
 
-            if (!userExists)
+            var userExist = this.userService.Exists(username);
+            var friendExist = this.userService.Exists(friendUsername);
+
+            if (!userExist)
             {
-                throw new ArgumentException($"User {username} not exist!");
+                throw new ArgumentException($"{username} not found!");
             }
-            if (!friendExistrs)
+
+            if (!friendExist)
             {
-                throw new ArgumentException($"User {friendUsername} not exist!");
+                throw new ArgumentException($"{friendUsername} not found!");
             }
 
             var user = this.userService.ByUsername<UserFriendsDto>(username);
             var friend = this.userService.ByUsername<UserFriendsDto>(friendUsername);
 
-            bool isSendRequestFromUser = user.Friends.Any(x => x.Username == friendUsername);
-            bool isSendRequestFromFriend = friend.Friends.Any(x => x.Username == username);
+            var isSentRequestFromUser = user
+                .Friends
+                .Any(x => x.Username == friend.Username);
 
-            if (isSendRequestFromUser && isSendRequestFromFriend)
+            var isSentRequestFromFriend = friend
+                .Friends
+                .Any(x => x.Username == user.Username);
+
+            if (isSentRequestFromUser && isSentRequestFromFriend)
             {
-                throw new InvalidOperationException($"{friendUsername} and {username} are already friends!");
+                throw new InvalidOperationException($"{friend.Username} is already a friend to {user.Username}");
             }
-            else if (isSendRequestFromUser && !isSendRequestFromFriend)
+            else if (isSentRequestFromUser && !isSentRequestFromFriend)
             {
-                throw new InvalidOperationException($"Request is already sent!");
+                throw new InvalidOperationException("Request is already sent!");
+            }
+            else if (isSentRequestFromFriend && !isSentRequestFromUser)
+            {
+                throw new InvalidOperationException("Request is already sent!");
             }
 
             this.userService.AddFriend(user.Id, friend.Id);
 
-            return $"Friend {friendUsername} added to {username}";
+            return $"Friend {friend} added to {user}!";
         }
     }
 }
