@@ -11,3 +11,4 @@ obj
 Configuration.cs
 *.bat
 Migrations
+appsettings.json
