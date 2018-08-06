@@ -12,3 +12,5 @@ Configuration.cs
 *.bat
 Migrations
 appsettings.json
+/DBAdvancedEntityFramework/XmlAttributesLab-Demo/XmlAttributesDemo
+/DBAdvancedEntityFramework/XMLProcessingLab/XMLProcessing
