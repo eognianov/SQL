@@ -44,7 +44,7 @@ namespace SoftJail.Data.Models
         public DateTime? ReleaseDate { get; set; }
         
         [Range(typeof(decimal), "0", "79228162514264337593543950335")]
-        public decimal Bail { get; set; }
+        public decimal? Bail { get; set; }
 
         public int? CellId { get; set; }
 
